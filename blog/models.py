@@ -9,7 +9,7 @@ class Post(models.Model):
     category = models.ManyToManyField('Category', blank=True)
     post_created = models.DateTimeField(auto_now_add=True)
     post_published = models.DateTimeField(null=True, blank=True)
-    post_image = models.ImageField(upload_to='blog_images/% Y/% m/% d/', blank=True)
+    post_image = models.ImageField(upload_to='blog_images/%Y/%m/%d/', blank=True)
 
     def __str__(self):
         return self.title

@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <h1>Posts:</h1>
+    <ul>
+    {% for p in posts %}
+
+        <li>
+        <h2>{{ p.title }}</h2>
+        <p>{{ p.description|truncatechars:75 }}</p>
+        {% if p.post_image %}
+            <img src="{{ p.post_image.url }}" alt="img">
+        {% endif %}
+        </li>
+
+    {% endfor %}
+    </ul>
+{% endblock %}
