@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <h1>Post detail:</h1>
+    {% load static %}
+    <div class="card mb-3" style="max-width: 850px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+            {% if post.post_image %}
+          <img
+            src="{{ post.post_image.url }}"
+            alt="{{ post.title }}"
+            class="img-fluid rounded-start"
+            style="height: 350px; width: 350px;"
+          />
+                {% else %}
+
+               <img
+            src="{% static 'blog/images/post_detail_non_image.jpg' %}"
+            alt="{{ post.title }}"
+            class="img-fluid rounded-start"
+            style="height: 350px; width: 350px;"
+          />
+
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">
+              {{ post.description }}
+            </p>
+              <p class="card-text">
+              <small class="text-muted">Author - {{ post.get_author_name }}</small>
+            </p>
+            <p class="card-text">
+              <small class="text-muted">Publish time - {{ post.post_published }}</small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

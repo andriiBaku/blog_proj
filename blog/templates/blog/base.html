@@ -16,7 +16,7 @@
   <!-- Container wrapper -->
   <div class="container-fluid">
     <!-- Navbar brand -->
-    <a class="navbar-brand me-2" href="#">
+    <a class="navbar-brand me-2" href="{% url 'homepage' %}">
       <img
         src="{% static 'blog/images/blog.png' %}"
         height="16"
@@ -60,7 +60,7 @@
       <!-- Left links -->
       <ul class="navbar-nav mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Add</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'post_create' %}">Add Post</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Check</a>

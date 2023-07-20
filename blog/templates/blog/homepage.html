@@ -3,15 +3,22 @@
 {% block content %}
 
     <h1>Posts:</h1>
-    <ul>
+    <ul class="list-group list-group-light">
     {% for p in posts %}
 
-        <li>
-        <h2>{{ p.title }}</h2>
-        <p>{{ p.description|truncatechars:75 }}</p>
-        {% if p.post_image %}
-            <img src="{{ p.post_image.url }}" alt="img">
-        {% endif %}
+        <li class="list-group-item">
+
+        <div class="img-fluid" style="width: 35rem">
+            {% if p.post_image %}
+          <img src="{{ p.post_image.url }}" class="card-img-top" alt="{{ p.title }}" style="height: 200px; width: 200px;"/>
+            {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ p.title }}</h5>
+            <p class="card-text">{{ p.description|truncatechars:150 }}</p>
+            <a href="{% url 'post_detail' p.pk %}" class="btn btn-primary">Post detail</a>
+          </div>
+        </div>
+
         </li>
 
     {% endfor %}

@@ -3,4 +3,6 @@ from . import views
 
 urlpatterns = [
     re_path('^$', views.homepage, name='homepage'),
+    re_path('^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
+    re_path('^post/create/$', views.post_create, name='post_create'),
 ]
