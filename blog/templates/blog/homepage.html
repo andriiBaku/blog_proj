@@ -15,6 +15,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ p.title }}</h5>
             <p class="card-text">{{ p.description|truncatechars:150 }}</p>
+              <p class="card-text">Comments: {{ p.get_comments_count }}</p>
             <a href="{% url 'post_detail' p.pk %}" class="btn btn-primary">Post detail</a>
           </div>
         </div>

@@ -23,4 +23,16 @@ def post_create(request):
             return redirect('post_detail', pk=post_form.pk)
     else:
         form = PostForm()
-    return render(request, 'blog/post_create_form.html', {'form': form})
+    return render(request, 'blog/post_form.html', {'form': form})
+
+def post_update(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post_form = form.save(commit=False)
+            post_form.save()
+            return redirect('post_detail', pk=pk)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'blog/post_form.html', {'form': form})
