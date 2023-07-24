@@ -38,10 +38,25 @@
               <small class="text-muted">Publish time - {{ post.post_published }}</small>
             </p>
               <a href="{% url 'post_update' pk=post.pk %}" class="card-link">Update Post</a>
-              <a href="#" class="card-link">Add comment</a>
+              <a href="{% url 'comment_create' post_pk=post.pk %}" class="card-link">Add comment</a>
           </div>
         </div>
       </div>
     </div>
+    <h1>Post Comments:</h1>
+    <ul class="list-group">
+    {% for comment in comments %}
+
+        <li class="list-group-item">
+            <div class="card">
+              <div class="card-body">
+                {{ comment.text }}
+              </div>
+            </div>
+        </li>
+
+    {% endfor %}
+        </ul>
+
 
 {% endblock %}
