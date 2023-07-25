@@ -4,6 +4,8 @@ from .models import Post, Author, Category
 from django.contrib.auth.models import User
 from django.views.generic import TemplateView, UpdateView
 from .forms import PostForm, CommentForm
+
+
 # Create your views here.
 
 
@@ -12,10 +14,12 @@ def homepage(request):
     categories = Category.objects.all()
     return render(request, 'blog/homepage.html', {'posts': posts, 'categories': categories})
 
+
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
     comments = post.comment_set.all()
     return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments})
+
 
 def post_create(request):
     if request.method == "POST":
@@ -30,6 +34,7 @@ def post_create(request):
         form = PostForm()
     return render(request, 'blog/post_form.html', {'form': form})
 
+
 def post_update(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -42,10 +47,12 @@ def post_update(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_form.html', {'form': form})
 
+
 class UpdatePostStatus(UpdateView):
     model = Post
     fields = ['post_status']
     success_url = reverse_lazy('unpublished_posts')
+
 
 class GetUnpublishedPosts(TemplateView):
     template_name = 'blog/unpublished_posts.html'
@@ -55,13 +62,15 @@ class GetUnpublishedPosts(TemplateView):
         context['posts'] = Post.objects.all().exclude(post_status='pd')
         return context
 
+
 class GetCategories(TemplateView):
     template_name = 'blog/categories.html'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['categories'] = Category.objects.all()
         return context
+
 
 class GetPostsByCategory(TemplateView):
     template_name = 'blog/posts_by_category.html'
@@ -71,6 +80,7 @@ class GetPostsByCategory(TemplateView):
         context['posts'] = Category.objects.get(pk=self.kwargs.get('pk')).post_set.all()
         context['category_name'] = Category.objects.get(pk=self.kwargs.get('pk')).name
         return context
+
 
 def comment_create(request, post_pk):
     if request.method == "POST":

@@ -4,24 +4,25 @@
 
     <h1>Posts:</h1>
     <ul class="list-group list-group-light">
-    {% for p in posts %}
+        {% for p in posts %}
 
-        <li class="list-group-item">
+            <li class="list-group-item">
 
-        <div class="img-fluid" style="width: 35rem">
-            {% if p.post_image %}
-          <img src="{{ p.post_image.url }}" class="card-img-top" alt="{{ p.title }}" style="height: 200px; width: 200px;"/>
-            {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ p.title }}</h5>
-            <p class="card-text">{{ p.description|truncatechars:150 }}</p>
-              <p class="card-text">Comments: {{ p.get_comments_count }}</p>
-            <a href="{% url 'post_detail' p.pk %}" class="btn btn-primary">Post detail</a>
-          </div>
-        </div>
+                <div class="img-fluid" style="width: 35rem">
+                    {% if p.post_image %}
+                        <img src="{{ p.post_image.url }}" class="card-img-top" alt="{{ p.title }}"
+                             style="height: 200px; width: 200px;"/>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ p.title }}</h5>
+                        <p class="card-text">{{ p.description|truncatechars:150 }}</p>
+                        <p class="card-text">Comments: {{ p.get_comments_count }}</p>
+                        <a href="{% url 'post_detail' p.pk %}" class="btn btn-primary">Post detail</a>
+                    </div>
+                </div>
 
-        </li>
+            </li>
 
-    {% endfor %}
+        {% endfor %}
     </ul>
 {% endblock %}

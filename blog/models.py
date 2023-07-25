@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class Post(models.Model):
     author = models.ForeignKey('Author', on_delete=models.CASCADE)
@@ -29,11 +30,13 @@ class Post(models.Model):
         comments_count = self.comment_set.all().count()
         return comments_count
 
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
+
 
 class Author(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -43,6 +46,7 @@ class Author(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
