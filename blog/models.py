@@ -17,7 +17,7 @@ class Post(models.Model):
         ('pd', 'posted'),
     )
 
-    post_status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='i_p')
+    post_status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='pg')
 
     def __str__(self):
         return self.title

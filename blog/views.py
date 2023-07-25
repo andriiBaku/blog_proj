@@ -1,13 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Author
+from django.urls import reverse_lazy
+from .models import Post, Author, Category
 from django.contrib.auth.models import User
+from django.views.generic import TemplateView, UpdateView
 from .forms import PostForm, CommentForm
 # Create your views here.
 
 
 def homepage(request):
     posts = Post.objects.all()
-    return render(request, 'blog/homepage.html', {'posts': posts})
+    categories = Category.objects.all()
+    return render(request, 'blog/homepage.html', {'posts': posts, 'categories': categories})
 
 def post_detail(request, pk):
     post = Post.objects.get(pk=pk)
@@ -38,6 +41,36 @@ def post_update(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_form.html', {'form': form})
+
+class UpdatePostStatus(UpdateView):
+    model = Post
+    fields = ['post_status']
+    success_url = reverse_lazy('unpublished_posts')
+
+class GetUnpublishedPosts(TemplateView):
+    template_name = 'blog/unpublished_posts.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['posts'] = Post.objects.all().exclude(post_status='pd')
+        return context
+
+class GetCategories(TemplateView):
+    template_name = 'blog/categories.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['categories'] = Category.objects.all()
+        return context
+
+class GetPostsByCategory(TemplateView):
+    template_name = 'blog/posts_by_category.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['posts'] = Category.objects.get(pk=self.kwargs.get('pk')).post_set.all()
+        context['category_name'] = Category.objects.get(pk=self.kwargs.get('pk')).name
+        return context
 
 def comment_create(request, post_pk):
     if request.method == "POST":

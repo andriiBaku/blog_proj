@@ -6,6 +6,12 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ('title', 'description', 'category', 'post_image', 'post_published',)
 
+class PostStatusUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ('post_status',)
+
 class CommentForm(forms.ModelForm):
 
     class Meta:

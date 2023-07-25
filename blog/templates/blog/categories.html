@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <h1>Categories:</h1>
+
+    <ul class="list-group">
+    {% for c in categories %}
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {% if c.post_set.all.count >= 1 %}
+                <p><a href="{% url 'posts_by_category' c.pk %}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{ c.name }}</a></p>
+            {% else %}
+                <p><a href="#" class="nav-link disabled">{{ c.name }}</a></p>
+            {% endif %}
+
+
+            <span class="badge bg-primary rounded-pill">{{ c.post_set.all.count }}</span>
+          </li>
+
+    {% endfor %}
+    </ul>
+
+{% endblock %}
