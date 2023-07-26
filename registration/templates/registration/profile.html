@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="m-3">
+    <h1>Profile Page:</h1>
+    <ul class="list-group list-group-flush">
+
+        <li class="list-group-item">First name: {{ user_info.first_name }}</li>
+        <li class="list-group-item">Last name: {{ user_info.last_name }}</li>
+        <li class="list-group-item">Date of birth: {{ user_info.date_of_birth }}</li>
+        <li class="list-group-item"><a href="{% url 'update_profile' pk=user_info.pk %}" class="card-link">Update
+            Profile</a></li>
+
+    </ul>
+    </div>
+{% endblock %}

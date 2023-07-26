@@ -54,7 +54,7 @@ class UpdatePostStatus(UpdateView):
     success_url = reverse_lazy('unpublished_posts')
 
 
-class GetUnpublishedPosts(LoginRequiredMixin ,TemplateView):
+class GetUnpublishedPosts(LoginRequiredMixin,TemplateView):
     template_name = 'blog/unpublished_posts.html'
     login_url = '/account/signin/'
 
