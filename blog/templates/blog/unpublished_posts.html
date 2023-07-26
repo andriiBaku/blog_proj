@@ -7,7 +7,7 @@
         {% for post in posts %}
 
             <li class="list-group-item">
-                <div class="card">
+                <div class="card {% if post.post_status == 'cd' %} bg-danger {% else %} bg-warning {% endif %}">
                     <h5 class="card-header">{{ post.title }}</h5>
                     <div class="card-body">
                         <h5 class="card-title">Author: {{ post.get_author_name }}</h5>

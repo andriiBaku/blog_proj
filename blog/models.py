@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Post(models.Model):
-    author = models.ForeignKey('Author', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=200)
     description = models.TextField()
     category = models.ManyToManyField('Category', blank=True)
@@ -39,7 +39,7 @@ class Category(models.Model):
 
 
 class Author(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, null=True, blank=True)
     last_name = models.CharField(max_length=100, null=True, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
@@ -50,7 +50,7 @@ class Author(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    comment_author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True)
+    comment_author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     text = models.CharField(max_length=500)
     like = models.IntegerField(default=0)
     dislike = models.IntegerField(default=0)

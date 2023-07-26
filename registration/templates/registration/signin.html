@@ -3,19 +3,27 @@
 {% block content %}
 
     {% load crispy_forms_tags %}
-    <h1>Signin Page:</h1>
-    {% if form.errors %}
-        <p>Something went wrong.</p>
-    {% endif %}
+    <div class="m-3">
+        <h1>Signin Page:</h1>
+        {% if form.errors %}
+            <p>Something went wrong.</p>
+        {% endif %}
 
-    <form method="post" class="m-3" action="{% url 'sign_in' %}">
+        {% if next %}
+            <p>For getting access to page '{{ next }}', you should log in to your account. If you haven't an account, please go to
+                <a href="{% url 'sign_up' %}" class="card-link">Register Page</a> and sign up to us.</p>
+        {% endif %}
 
-    {% csrf_token %}
+        <form method="post" class="m-3" action="{% url 'sign_in' %}">
 
-    {{ form|crispy }}
+            {% csrf_token %}
 
-    <button class="btn btn-primary my-4" type="submit" value="Login">Submit</button>
+            {{ form|crispy }}
 
-    </form>
+            <button class="btn btn-primary my-4" type="submit" value="Login">Submit</button>
+
+        </form>
+
+    </div>
 
 {% endblock %}

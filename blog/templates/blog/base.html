@@ -71,21 +71,27 @@
             >
                 <!-- Left links -->
                 <ul class="navbar-nav mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'post_create' %}">Add Post</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Check</a>
                     </li>
+                    {% endif %}
                 </ul>
                 <!-- Left links -->
             </div>
             <!-- Collapsible wrapper -->
 
             <div class="d-flex align-items-center">
-                <a href="{% url 'sign_in' %}" class="btn btn-primary m-1">Sign in</a>
-                <a href="{% url 'sign_up' %}" class="btn btn-primary m-1">Sign up</a>
-                <a href="{% url 'logout' %}" class="btn btn-primary m-1">Logout</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="btn btn-primary m-1">Logout</a>
+                {% else %}
+                    <a href="{% url 'sign_in' %}" class="btn btn-primary m-1">Sign in</a>
+                    <a href="{% url 'sign_up' %}" class="btn btn-primary m-1">Sign up</a>
+                {% endif %}
+
             </div>
         </div>
         <!-- Collapsible wrapper -->

@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from .models import Post, Author, Category
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, UpdateView
 from .forms import PostForm, CommentForm
 
@@ -10,7 +11,7 @@ from .forms import PostForm, CommentForm
 
 
 def homepage(request):
-    posts = Post.objects.all()
+    posts = Post.objects.filter(post_status='pd')
     categories = Category.objects.all()
     return render(request, 'blog/homepage.html', {'posts': posts, 'categories': categories})
 
@@ -26,8 +27,7 @@ def post_create(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post_form = form.save(commit=False)
-            author = Author.objects.get(user=request.user)
-            post_form.author = author
+            post_form.author = request.user
             post_form.save()
             return redirect('post_detail', pk=post_form.pk)
     else:
@@ -54,8 +54,9 @@ class UpdatePostStatus(UpdateView):
     success_url = reverse_lazy('unpublished_posts')
 
 
-class GetUnpublishedPosts(TemplateView):
+class GetUnpublishedPosts(LoginRequiredMixin ,TemplateView):
     template_name = 'blog/unpublished_posts.html'
+    login_url = '/account/signin/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
