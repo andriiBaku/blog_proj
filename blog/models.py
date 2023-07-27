@@ -30,6 +30,14 @@ class Post(models.Model):
         comments_count = self.comment_set.all().count()
         return comments_count
 
+    def get_post_category(self):
+        categories = self.category.all()
+        return ', '.join(str(cat) for cat in categories)
+
+    class Meta:
+        permissions = [
+            ('set_post_status', 'Can set the status of the post to either publish or not'),
+        ]
 
 class Category(models.Model):
     name = models.CharField(max_length=100)

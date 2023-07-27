@@ -2,6 +2,38 @@
 
 {% block content %}
 
-    
+    <div class="m-3">
 
+        <h1>Posts of {{ user.get_username }} user:</h1>
+
+        <ul class="list-group">
+
+            {% for post in posts %}
+
+                <li class="list-group-item">
+
+                    <div class="card {% if post.post_status == 'cd' %} bg-danger {% elif post.post_status == 'pg' %} bg-warning {% else %} bg-success {% endif %}">
+                        <div class="card-header">
+                            Category: {% if post.get_post_category %} {{ post.get_post_category }} {% else %}
+                            None {% endif %}
+                        </div>
+                        <div class="card-header">
+                            Post status: {{ post.get_post_status_display }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.description|truncatechars:75 }}</p>
+                            <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary">Post detail</a>
+                            <h5 class="card-title m-1 mb-0">Post created: {{ post.post_created }}</h5>
+                        </div>
+                    </div>
+
+                </li>
+
+            {% endfor %}
+
+
+        </ul>
+
+    </div>
 {% endblock %}

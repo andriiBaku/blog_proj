@@ -13,7 +13,9 @@
                         <h5 class="card-title">Author: {{ post.get_author_name }}</h5>
                         <p class="card-text">{{ post.description|truncatechars:100 }}</p>
                         <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary">Detail</a>
+                        {% if perms.blog.set_post_status %}
                         <a href="{% url 'update_post_status' post.pk %}" class="btn btn-primary">Update Post Status</a>
+                        {% endif %}
                     </div>
                 </div>
             </li>

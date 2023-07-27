@@ -53,14 +53,19 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="{% url 'homepage' %}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'get_categories' %}">Categories</a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'unpublished_posts' %}">Unpublished posts</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'posts_by_username' user.get_username %}">My posts</a>
+                </li>
+                {% endif %}
             </ul>
             <!-- Left links -->
 

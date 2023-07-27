@@ -1,62 +1,79 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-
-    <h1>Post detail:</h1>
     {% load static %}
-    <div class="card mb-3" style="max-width: 850px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-            {% if post.post_image %}
-          <img
-            src="{{ post.post_image.url }}"
-            alt="{{ post.title }}"
-            class="img-fluid rounded-start"
-            style="height: 350px; width: 350px;"
-          />
-                {% else %}
+    <div class="m-3">
 
-               <img
-            src="{% static 'blog/images/post_detail_non_image.jpg' %}"
-            alt="{{ post.title }}"
-            class="img-fluid rounded-start"
-            style="height: 350px; width: 350px;"
-          />
+        <h1>Post detail:</h1>
+        {% load static %}
+        <div class="card mb-1 p-3" style="max-width: 850px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    {% if post.post_image %}
+                        <img
+                                src="{{ post.post_image.url }}"
+                                alt="{{ post.title }}"
+                                class="img-fluid rounded-start"
+                                style="height: 350px; width: 350px;"
+                        />
+                    {% else %}
 
-            {% endif %}
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">
-              {{ post.description }}
-            </p>
-              <p class="card-text">
-              <small class="text-muted">Author - {{ post.get_author_name }}</small>
-            </p>
-            <p class="card-text">
-              <small class="text-muted">Publish time - {{ post.post_published }}</small>
-            </p>
-              <a href="{% url 'post_update' pk=post.pk %}" class="card-link">Update Post</a>
-              <a href="{% url 'comment_create' post_pk=post.pk %}" class="card-link">Add comment</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <h1>Post Comments:</h1>
-    <ul class="list-group">
-    {% for comment in comments %}
+                        <img
+                                src="{% static 'blog/images/post_detail_non_image.jpg' %}"
+                                alt="{{ post.title }}"
+                                class="img-fluid rounded-start"
+                                style="height: 350px; width: 350px;"
+                        />
 
-        <li class="list-group-item">
-            <div class="card">
-              <div class="card-body">
-                {{ comment.text }}
-              </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">
+                            {{ post.description }}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">Author - {{ post.get_author_name }}</small>
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">Publish time - {{ post.post_published }}</small>
+                        </p>
+                        <a href="{% url 'post_update' pk=post.pk %}" class="card-link">Update Post</a>
+                        <a href="{% url 'comment_create' post_pk=post.pk %}" class="card-link">Add comment</a>
+                        {% if perms.blog.set_post_status %}
+                            <a href="{% url 'update_post_status' post.pk %}" class="btn btn-primary">Update Post
+                                Status</a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-        </li>
+        </div>
+        <h1>Post Comments:</h1>
+        <ul class="list-group">
+            {% for comment in comments %}
 
-    {% endfor %}
+                <li class="list-group-item d-flex align-self-lg-start">
+                    <div class="card flex-grow-1 p-1">
+                        <div class="card-body">
+                            <h5 class="card-text">{{ comment.text }}</h5>
+                            <div class="d-flex justify-content-end">
+                                Likes: {{ comment.like }}
+                                Dislikes: {{ comment.dislike }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2 align-self-center"><a href="{% url 'add_comment_like' comment.pk %}"><img src="{% static 'blog/images/like.png' %}"
+                                                                        style="width: 25px; height: 25px;"
+                                                                        alt="like"></a></div>
+                    <div class="p-2 align-self-center"><a href="{% url 'add_comment_dislike' comment.pk %}"><img src="{% static 'blog/images/dislike.png' %}"
+                                                                        style="width: 25px; height: 25px;"
+                                                                        alt="dislike"></a></div>
+                </li>
+
+            {% endfor %}
         </ul>
 
+    </div>
 
 {% endblock %}
