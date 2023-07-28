@@ -6,54 +6,71 @@
 
         <h1>Post detail:</h1>
         {% load static %}
-        <div class="card mb-1 p-3" style="max-width: 850px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    {% if post.post_image %}
-                        <img
-                                src="{{ post.post_image.url }}"
-                                alt="{{ post.title }}"
-                                class="img-fluid rounded-start"
-                                style="height: 350px; width: 350px;"
-                        />
-                    {% else %}
+        <div class="d-flex justify-content-center">
 
-                        <img
-                                src="{% static 'blog/images/post_detail_non_image.jpg' %}"
-                                alt="{{ post.title }}"
-                                class="img-fluid rounded-start"
-                                style="height: 350px; width: 350px;"
-                        />
+            <div class="card mb-1 p-3" style="max-width: 850px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        {% if post.post_image %}
+                            <img
+                                    src="{{ post.post_image.url }}"
+                                    alt="{{ post.title }}"
+                                    class="img-fluid rounded-start"
+                                    style="height: 350px; width: 350px;"
+                            />
+                        {% else %}
 
-                    {% endif %}
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">
-                            {{ post.description }}
-                        </p>
-                        <p class="card-text">
-                            <small class="text-muted">Author - {{ post.get_author_name }}</small>
-                        </p>
-                        <p class="card-text">
-                            <small class="text-muted">Publish time - {{ post.post_published }}</small>
-                        </p>
-                        <a href="{% url 'post_update' pk=post.pk %}" class="card-link">Update Post</a>
-                        <a href="{% url 'comment_create' post_pk=post.pk %}" class="card-link">Add comment</a>
-                        {% if perms.blog.set_post_status %}
-                            <a href="{% url 'update_post_status' post.pk %}" class="btn btn-primary">Update Post
-                                Status</a>
+                            <img
+                                    src="{% static 'blog/images/post_detail_non_image.jpg' %}"
+                                    alt="{{ post.title }}"
+                                    class="img-fluid rounded-start"
+                                    style="height: 350px; width: 350px;"
+                            />
+
                         {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">
+                                {{ post.description }}
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Author - {{ post.get_author_name }}</small>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Publish time - {{ post.post_published }}</small>
+                            </p>
+                            <a href="{% url 'post_update' pk=post.pk %}" class="card-link">Update Post</a>
+                            <a href="{% url 'comment_create' post_pk=post.pk %}" class="card-link">Add comment</a>
+                            {% if perms.blog.set_post_status %}
+                                <a href="{% url 'update_post_status' post.pk %}" class="btn btn-primary">Update Post
+                                    Status</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <h1>Post Comments:</h1>
         <ul class="list-group">
             {% for comment in comments %}
 
                 <li class="list-group-item d-flex align-self-lg-start">
+                    <div class="p-2 align-self-center">
+                        <a class="d-flex align-items-center" href="{% url 'author_profile' comment.comment_author.pk %}">
+                            <img
+                                    src="{% static 'blog/images/post_detail_non_image.jpg' %}"
+                                    class="rounded-circle"
+                                    height="25"
+                                    width="25"
+                                    alt="Black and White Portrait of a Man"
+                                    loading="lazy"
+                            />
+                        </a>
+                    </div>
                     <div class="card flex-grow-1 p-1">
                         <div class="card-body">
                             <h5 class="card-text">{{ comment.text }}</h5>
@@ -63,12 +80,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-2 align-self-center"><a href="{% url 'add_comment_like' comment.pk %}"><img src="{% static 'blog/images/like.png' %}"
-                                                                        style="width: 25px; height: 25px;"
-                                                                        alt="like"></a></div>
-                    <div class="p-2 align-self-center"><a href="{% url 'add_comment_dislike' comment.pk %}"><img src="{% static 'blog/images/dislike.png' %}"
-                                                                        style="width: 25px; height: 25px;"
-                                                                        alt="dislike"></a></div>
+                    <div class="p-2 align-self-center"><a href="{% url 'add_comment_like' comment.pk %}"><img
+                            src="{% static 'blog/images/like.png' %}"
+                            style="width: 25px; height: 25px;"
+                            alt="like"></a></div>
+                    <div class="p-2 align-self-center"><a href="{% url 'add_comment_dislike' comment.pk %}"><img
+                            src="{% static 'blog/images/dislike.png' %}"
+                            style="width: 25px; height: 25px;"
+                            alt="dislike"></a></div>
                 </li>
 
             {% endfor %}

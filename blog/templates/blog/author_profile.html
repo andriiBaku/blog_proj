@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    {% load static %}
+    <h1>Author Profile Page:</h1>
+
+    <div class="card mb-3 p-1" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4 d-flex align-items-center">
+                <img
+                        src="{% static 'blog/images/post_detail_non_image.jpg' %}"
+                        alt="Trendy Pants and Shoes"
+                        class="img-fluid rounded-circle"
+                        style="width: 200px; height: 200px;"
+                />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Name: {{ author.first_name }}</li>
+                        <li class="list-group-item">Last Name: {{ author.last_name }}</li>
+                        <li class="list-group-item">Date of birth:
+                            {% if author.date_of_birth %} {{ author.date_of_birth }} {% else %} None {% endif %}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <h1>Author Posts:</h1>
+
+    <ul class="list-group">
+
+        {% for user_post in user_posts %}
+
+            <li class="list-group-item d-flex align-self-lg-start px-3 border-0">
+
+                <div class="card flex-grow-1" style="max-width: 700px;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user_post.title }}</h5>
+                        <p class="card-text">{{ user_post.description|truncatechars:100 }}</p>
+                        <a href="{% url 'post_detail' user_post.pk %}" class="btn btn-primary">Post detail</a>
+                    </div>
+                </div>
+
+            </li>
+
+        {% endfor %}
+
+
+    </ul>
+
+{% endblock %}

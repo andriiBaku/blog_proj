@@ -14,4 +14,5 @@ urlpatterns = [
     re_path('^category/(?P<pk>\d+)/posts/$', views.GetPostsByCategory.as_view(), name='posts_by_category'),
     re_path('^comment/(?P<pk>\d+)/add_like/$', views.comment_add_like, name='add_comment_like'),
     re_path('^comment/(?P<pk>\d+)/add_dislike/$', views.comment_add_dislike, name='add_comment_dislike'),
+    re_path('^author/(?P<pk>\d+)/profile/$', views.GetAuthorProfile.as_view(), name='author_profile'),
 ]

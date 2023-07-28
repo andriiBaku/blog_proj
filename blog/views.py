@@ -140,3 +140,14 @@ def comment_add_dislike(request, pk):
     comment.dislike += 1
     comment.save()
     return redirect('post_detail', pk=comment.post.pk)
+
+class GetAuthorProfile(TemplateView):
+    template_name = 'blog/author_profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        user = User.objects.get(pk=self.kwargs.get('pk'))
+        author, res = Author.objects.get_or_create(user=user, first_name=user.username.capitalize())
+        context['author'] = author
+        context['user_posts'] = user.post_set.filter(post_status='pd')
+        return context
